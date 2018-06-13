@@ -1,11 +1,11 @@
 package com.dkc.snake.util;
 
 import com.dkc.model.IDrawable;
+import com.dkc.view.Sprite;
 
 import java.io.IOException;
 
 import com.dkc.model.GameObject;
-import com.dkc.model.Sprite;
 
 public class Dot extends GameObject implements IDrawable {
 	Sprite sprite; final String IMAGELOCATION = "Snake";

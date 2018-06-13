@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import com.dkc.model.GameObject;
 import com.dkc.model.IMoving;
-import com.dkc.model.Sprite;
+import com.dkc.view.Sprite;
 
 
 public class BodyPart extends GameObject implements IDrawable, IMoving {
@@ -20,16 +20,18 @@ public class BodyPart extends GameObject implements IDrawable, IMoving {
 		x = newX; y = newY;
 		xDir = 0; yDir = 0;
 		sprite = new Sprite(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW);
-		sprite.setDegree(degree); sprite.setPos(x, y);
+		refreshSprite();
 	}
 	
 	public BodyPart(double newX, double newY, double newXDir, double newYDir) throws IOException
 	{
 		this(newX, newY); xDir = newXDir; yDir = newYDir;
 	}
-
+	
+	public void setDegree( double newDegree ) { degree = newDegree; }
+	public double getDegree() { return degree; }
 	@Override
-	public void move() { x += xDir; y += yDir;}
+	public void move() { x += xDir; y += yDir; refreshSprite();}
 	@Override
 	public Sprite getSprite() { return sprite; }
 	@Override

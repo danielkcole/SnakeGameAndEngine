@@ -2,7 +2,7 @@ package com.dkc.test;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import com.dkc.model.Sprite;
+import com.dkc.view.Sprite;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -64,8 +64,10 @@ public class TestMain extends Application {
   @SuppressWarnings("unused")
 private void fillBackground(GraphicsContext gc, Sprite sprite)
   {
-	  for (int i = 0; i < HEIGHT; i+=16) {
-		  for (int j = 0; j < WIDTH; j+=16) {
+	  for ( double i = 0; i < WIDTH; i += sprite.getWidth() ) 
+	  {
+		  for ( double j = 0; j < HEIGHT; j += sprite.getHeight() ) 
+		  {
 			  gc.drawImage(sprite.getImage(), i, j);
 		  }
 	  }

@@ -1,91 +1,38 @@
 package com.dkc.snake;
 
+import java.util.List;
 
-import java.util.ArrayList;
-
+import com.dkc.view.Sprite;
 import com.dkc.view.View;
-
-import javafx.event.EventHandler;
-import javafx.scene.Cursor;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
-import javafx.stage.Stage;
 
 @SuppressWarnings("restriction")
 public class SnakeGameView extends View {
+	final static int HEIGHT = 320;
+	final static int WIDTH = 320;
+	static final String WINDOWNAME = "Snake";
+	
+	public SnakeGameView() {
+		super(HEIGHT, WIDTH, WINDOWNAME);
+	}
+	
+	public void play() {launch();}
 
-	private ArrayList<Shape> nodes;
+	@Override
+	public void render() { // default implementation ignored 
+	}
 
-	public static void main(String[] args) { launch(args); }
+	public void render(Sprite backGround, List<Sprite> sprites, int score) 
+	{
+		graphicsContext.clearRect(0, 0, HEIGHT,WIDTH);
+		fillBackground( backGround );
+		drawSprites( sprites );
+		drawScore( score );
+	}
+	
+	
+	void drawScore(int score) { graphicsContext.fillText("" + score, 0, 0); }
 
-  @Override public void start(Stage primaryStage) {
-    primaryStage.setTitle("Drag circles around to see collisions");
-    Group root = new Group();
-    Scene scene = new Scene(root, 400, 400);
-
-    nodes = new ArrayList<>();
-    nodes.add(new Circle(15, 15, 30));
-    nodes.add(new Circle(90, 60, 30));
-    nodes.add(new Circle(40, 200, 30));
-    for (Shape block : nodes) {
-      setDragListeners(block);
-    }
-    root.getChildren().addAll(nodes);
-    checkShapeIntersection(nodes.get(nodes.size() - 1));
-
-    primaryStage.setScene(scene);
-    primaryStage.show();
-  }
-
-  
-public void setDragListeners(final Shape block) {
-    final Delta dragDelta = new Delta();
-
-    block.setOnMousePressed(new EventHandler<MouseEvent>() {
-      @Override public void handle(MouseEvent mouseEvent) {
-        // record a delta distance for the drag and drop operation.
-        dragDelta.x = block.getLayoutX() - mouseEvent.getSceneX();
-        dragDelta.y = block.getLayoutY() - mouseEvent.getSceneY();
-        block.setCursor(Cursor.NONE);
-      }
-    });
-    block.setOnMouseReleased(new EventHandler<MouseEvent>() {
-      @Override public void handle(MouseEvent mouseEvent) {
-        block.setCursor(Cursor.HAND);
-      }
-    });
-    block.setOnMouseDragged(new EventHandler<MouseEvent>() {
-      @Override public void handle(MouseEvent mouseEvent) {
-        block.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
-        block.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
-        checkShapeIntersection(block);
-      }
-    });
-  }
-
-  private void checkShapeIntersection(Shape block) {
-    boolean collisionDetected = false;
-    for (Shape static_bloc : nodes) {
-      if (static_bloc != block) {
-        static_bloc.setFill(Color.GREEN);
-
-        Shape intersect = Shape.intersect(block, static_bloc);
-        if (intersect.getBoundsInLocal().getWidth() != -1) {
-          collisionDetected = true;
-        }
-      }
-    }
-
-    if (collisionDetected) {
-      block.setFill(Color.BLUE);
-    } else {
-      block.setFill(Color.GREEN);
-    }
-  }
-
-  class Delta { double x, y; }
+	public void drawLose() { graphicsContext.fillText("You Lose!", 10, 10); }
+	
+	public void drawWin() { graphicsContext.fillText("You Win!", 10, 10); }
 }

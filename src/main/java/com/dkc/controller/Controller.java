@@ -1,15 +1,18 @@
 package com.dkc.controller;
 
 import java.io.IOException;
-import java.util.List;
-
-import com.dkc.engine.State;
 
 public abstract class Controller {
+	protected Controller nextController = this;
 	protected boolean keepRunning = true;
-	protected State nextState = null;
 	
 	
-	public abstract State tick(List<String> input) throws IOException;
+	public Controller tickAndRender() throws IOException {
+		tick();
+		render();
+		return nextController;
+	}
+	public abstract void tick() throws IOException;
+	public abstract void render();
 	public boolean keepRunning() { return keepRunning; }
 }
