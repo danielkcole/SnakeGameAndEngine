@@ -49,15 +49,14 @@ public class Sprite {
 		degree = newDegree;
 	}
 
-	public void setImage(String imageName, int h, int w, int col, int row) throws IOException
-	{	
-		image = ResourceLoader.getImage(imageName, h, w, col, row);
-	}
-
-
 	public void setImage(String imageName) throws IOException
 	{	
 		image = ResourceLoader.getImage(imageName);
+	}
+	
+	public void setImage(String imageName, int h, int w, int col, int row) throws IOException
+	{	
+		image = ResourceLoader.getImage(imageName, h, w, col, row);
 	}
 	
 	public Image getImage() { return image; }

@@ -1,6 +1,9 @@
 package com.dkc.snake.util;
 
 import com.dkc.model.IDrawable;
+
+import java.io.IOException;
+
 import com.dkc.model.GameObject;
 import com.dkc.model.IMoving;
 import com.dkc.model.Sprite;
@@ -10,18 +13,19 @@ public class BodyPart extends GameObject implements IDrawable, IMoving {
 	double degree; double xDir; double yDir; Sprite sprite;
 	final int SPRITEHEIGHT= 16; final int SPRITEWIDTH= 16;
 	final int SPRITECOL = 0; final int SPRITEROW = 3;
+	final String IMAGELOCATION = "Snake";
 	
-	public BodyPart(double newX, double newY, String imageLocation)
+	public BodyPart(double newX, double newY) throws IOException
 	{
 		x = newX; y = newY;
 		xDir = 0; yDir = 0;
-		sprite = new Sprite(imageLocation, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW);
+		sprite = new Sprite(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW);
 		sprite.setDegree(degree); sprite.setPos(x, y);
 	}
 	
-	public BodyPart(double newX, double newY, double newXDir, double newYDir, String imageLocation)
+	public BodyPart(double newX, double newY, double newXDir, double newYDir) throws IOException
 	{
-		this(newX, newY, imageLocation); xDir = newXDir; yDir = newYDir;
+		this(newX, newY); xDir = newXDir; yDir = newYDir;
 	}
 
 	@Override

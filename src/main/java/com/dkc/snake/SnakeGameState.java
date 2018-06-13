@@ -1,5 +1,6 @@
 package com.dkc.snake;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,13 +14,13 @@ public class SnakeGameState extends State {
 	Dot dot; BodyPart head;
 	double lastX; double lastY; double lastXDir; double lastYDir; int lastIndex; int score = 0;
 	
-	public SnakeGameState()
+	public SnakeGameState() throws IOException
 	{
-		head = new BodyPart(246, 246, 0, 1, null);
+		sprites.add(new Sprite("Snake", 16, 16, 3, 3)); //background
+		head = new BodyPart(160, 160, 0, 1, null);
 		sprites.add(head.getSprite());
 		dot = new Dot(new Random().nextInt(502), new Random().nextInt(502), null);
 		sprites.add(dot.getSprite());
-		sprites.add(new Sprite("a", 16, 16, 3, 3)); //background
 	}
 	
 	void spawnNewDot() 
