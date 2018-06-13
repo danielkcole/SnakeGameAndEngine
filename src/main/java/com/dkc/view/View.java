@@ -12,14 +12,14 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-public class GameView extends Application
+@SuppressWarnings("restriction")
+public class View extends Application
 {
 	GraphicsContext graphicsContext;
 	ArrayList<String> input = new ArrayList<>();
 	String windowName; Group rootGroup; Scene scene; Canvas canvas;
 	
-	public GameView(String wn) {
-		windowName = wn;
+	public View() {
 		launch();
 	}
 
@@ -39,7 +39,7 @@ public class GameView extends Application
 	    stage.show();
 	}
 	
-	public List<String> getInput()
+	public List<String> processInput()
 	{
         scene.setOnKeyPressed(
                 new EventHandler<KeyEvent>()
@@ -69,6 +69,8 @@ public class GameView extends Application
 	public void render()
 	{
 		//do work
-		//getInput();
+		//processInput();
 	}
+	
+	public ArrayList<String> getInput() { return input; }
 }

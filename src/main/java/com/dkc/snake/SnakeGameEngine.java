@@ -1,22 +1,22 @@
 package com.dkc.snake;
 
-import com.dkc.controller.Controller;
-import com.dkc.controller.GameEngine;
-import com.dkc.model.State;
-import com.dkc.view.GameView;
+import java.io.IOException;
+
+import com.dkc.engine.GameEngine;
+import com.dkc.engine.State;
 
 public class SnakeGameEngine extends GameEngine {
-	static final String WINDOWNAME = "Snake";
-	static final GameView GAMEVIEW = new GameView(WINDOWNAME);
-	static State currentState = new SnakeGameState();
-	static Controller controller = new SnakeGameController((SnakeGameState) currentState);
+	static State state; static State nextState;
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
-		while(currentState.keepRunning())
+		state = new SnakeGameState();
+		
+		while(state.getModel().keepRunning())
 		{
-			GAMEVIEW.render();
-			currentState = controller.tick(GAMEVIEW.getInput());
+			nextState = state.getController().tick( state.getView().getInput() );
+			if (nextState != null) state = nextState;
+			state.getView().render();
 		}
 	}
 }

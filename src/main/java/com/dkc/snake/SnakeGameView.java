@@ -1,21 +1,26 @@
 package com.dkc.snake;
 
 
-import javafx.application.Application;
+import java.util.ArrayList;
+
+import com.dkc.view.View;
+
 import javafx.event.EventHandler;
-import javafx.scene.*;
+import javafx.scene.Cursor;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import javafx.scene.shape.*;
+@SuppressWarnings("restriction")
+public class SnakeGameView extends View {
 
-public class SnakeGameView extends Application {
+	private ArrayList<Shape> nodes;
 
-  private ArrayList<Shape> nodes;
-
-  public static void main(String[] args) { launch(args); }
+	public static void main(String[] args) { launch(args); }
 
   @Override public void start(Stage primaryStage) {
     primaryStage.setTitle("Drag circles around to see collisions");
@@ -36,7 +41,8 @@ public class SnakeGameView extends Application {
     primaryStage.show();
   }
 
-  public void setDragListeners(final Shape block) {
+  
+public void setDragListeners(final Shape block) {
     final Delta dragDelta = new Delta();
 
     block.setOnMousePressed(new EventHandler<MouseEvent>() {

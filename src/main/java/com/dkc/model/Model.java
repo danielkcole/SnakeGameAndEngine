@@ -2,7 +2,7 @@ package com.dkc.model;
 
 import java.util.List;
 
-public abstract class State {
+public abstract class Model {
 	protected List<Sprite> sprites;
 	protected boolean keepRunning = true;
 	

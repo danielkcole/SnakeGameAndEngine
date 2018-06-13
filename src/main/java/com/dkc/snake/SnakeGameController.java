@@ -1,53 +1,42 @@
 package com.dkc.snake;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.dkc.controller.Controller;
-import com.dkc.model.State;
+import com.dkc.engine.State;
 import com.dkc.snake.util.BodyPart;
 import com.dkc.snake.util.SnakeMath;;
 
 public class SnakeGameController extends Controller {
-	SnakeGameState currentState;
-	ArrayList<BodyPart> body = currentState.getBody();
-	BodyPart head = currentState.getHead();
-	final int CHANGEINDEGREE = 5;
+	SnakeGameModel model;
+	ArrayList<BodyPart> body = model.getBody();
+	BodyPart head = model.getHead(); 
 	double degree;
+	static final int CHANGEINDEGREES = 5;
 	
-	public SnakeGameController(SnakeGameState sgs) { currentState = sgs; }
+	public SnakeGameController(SnakeGameModel sgm) { model = sgm; }
 	
-	public State tick(List<String> input) {
+	public State tick(List<String> input) throws IOException {
 		updateSnake(input);
-		collisions();
-		
-		nextState = currentState;
+		checkDotCollision();
+		if (checkLoss()) nextState = null; //change to loss output
 		return nextState;
 	}
-
-	void collisions()
-	{
-		if (checkLoseCollision()) ;
-		else if (checkDotCollision())
-		{
-			currentState.spawnNewDot();
-			currentState.addBody();
-		}
-		
-	}
 	
-	private boolean checkDotCollision() {
-		// TODO Auto-generated method stub
-		return false;
+	private void checkDotCollision() throws IOException {
+		model.spawnNewDot();
+		model.addBody();
 	}
 
-	private boolean checkLoseCollision() {
-		// TODO Auto-generated method stub
+	private boolean checkLoss() {
 		return false;
 	}
 
 	void updateSnake(List<String> input)
 	{
+		//change to update degrees
 		for(int i = body.size()-1; i > 0; i--)
 		{
 			body.get(i).move();
@@ -60,12 +49,12 @@ public class SnakeGameController extends Controller {
 		head.move();
 		if (input.contains("VK_LEFT")) 
 		{
-			degree = SnakeMath.toDegrees(head.getXDir(), head.getYDir()) + CHANGEINDEGREE;
+			degree = SnakeMath.toDegrees(head.getXDir(), head.getYDir()) + CHANGEINDEGREES;
 			head.setDir(SnakeMath.degreesToX(degree), SnakeMath.degreesToY(degree));
 		}
 		if (input.contains("VK_RIGHT")) 
 		{
-			degree = SnakeMath.toDegrees(head.getXDir(), head.getYDir()) - CHANGEINDEGREE;
+			degree = SnakeMath.toDegrees(head.getXDir(), head.getYDir()) - CHANGEINDEGREES;
 			head.setDir(SnakeMath.degreesToX(degree), SnakeMath.degreesToY(degree));
 		}
 	}
