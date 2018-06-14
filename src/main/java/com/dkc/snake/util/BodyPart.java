@@ -15,15 +15,19 @@ public class BodyPart extends GameObject implements IDrawable, IMoving {
 	final int SPRITECOL = 0; final int SPRITEROW = 3;
 	final String IMAGELOCATION = "Snake";
 	
-	public BodyPart(double newX, double newY) throws IOException
+	public BodyPart(double newX, double newY)
 	{
 		x = newX; y = newY;
 		xDir = 0; yDir = 0;
-		sprite = new Sprite(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW);
+		try {
+			sprite = new Sprite(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		refreshSprite();
 	}
 	
-	public BodyPart(double newX, double newY, double newXDir, double newYDir) throws IOException
+	public BodyPart(double newX, double newY, double newXDir, double newYDir)
 	{
 		this(newX, newY); xDir = newXDir; yDir = newYDir;
 	}

@@ -1,27 +1,22 @@
 package com.dkc.snake;
 
-import java.io.IOException;
+import java.util.List;
 
-import com.dkc.controller.Controller;;
+import com.dkc.controller.Controller;
+import com.dkc.model.Model;
+import com.dkc.view.View;;
 
 public class SnakeGameController extends Controller {
-	SnakeGameModel model;
-	SnakeGameView view;
-	
-	public SnakeGameController() throws IOException
-	{
-		model = new SnakeGameModel();
-		view = new SnakeGameView();
-		//view.play();
-	}
-	
-	public void tick() throws IOException 
-	{
-		model.tick(view.getInput());
+
+	@Override
+	public void handleInput(List<String> input) {
+		if ( input.contains("Left") ) ((SnakeGameModel) model).goLeft();
+		if ( input.contains("Right") ) ((SnakeGameModel) model).goRight();
 	}
 
-	public void render() 
-	{
-		view.render( model.getBackGround(), model.getSprites(), model.getScore() );
-	}
+	@Override
+	public View setView() { return new SnakeGameView(); }
+
+	@Override
+	public Model setModel() { return new SnakeGameModel(); }
 }

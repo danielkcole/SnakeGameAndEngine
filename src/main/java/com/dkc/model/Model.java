@@ -1,16 +1,18 @@
 package com.dkc.model;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.dkc.view.Sprite;
 
 public abstract class Model {
-	protected List<Sprite> sprites = new ArrayList<Sprite>();
-	protected boolean keepRunning = true;
+	Sprite background;
+	protected ArrayList<Sprite> sprites = new ArrayList<>();
 	
-	public List<Sprite> getSprites() {  return sprites; }
-	public boolean keepRunning() { return keepRunning; }
-	public abstract void tick(List<String> input) throws IOException;
+	public Model() { setBackground(); }
+	
+	public abstract void tick();
+	public abstract void setBackground();
+	public List<Sprite> getSprites() { return sprites; }
+	public Sprite getBackground() { return background;} //TODO change to handle sprite map backgrounds with strategy maybe?
 }

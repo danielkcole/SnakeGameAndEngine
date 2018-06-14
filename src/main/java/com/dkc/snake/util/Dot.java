@@ -12,10 +12,11 @@ public class Dot extends GameObject implements IDrawable {
 	final int SPRITEHEIGHT= 16; final int SPRITEWIDTH= 16;
 	final int SPRITECOL = 2; final int SPRITEROW = 3;
 	
-	public Dot(int newX, int newY) throws IOException
+	public Dot(int newX, int newY)
 	{
 		x = newX; y = newY; 
-		sprite = new Sprite(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW);
+		try { sprite = new Sprite(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW); }
+		catch (IOException e) { e.printStackTrace(); }
 		sprite.setPos(x, y);
 	}
 

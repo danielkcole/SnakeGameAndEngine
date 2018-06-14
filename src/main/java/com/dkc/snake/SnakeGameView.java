@@ -1,34 +1,18 @@
 package com.dkc.snake;
 
-import java.util.List;
-
-import com.dkc.view.Sprite;
 import com.dkc.view.View;
 
-@SuppressWarnings("restriction")
 public class SnakeGameView extends View {
-	final static int HEIGHT = 320;
-	final static int WIDTH = 320;
-	static final String WINDOWNAME = "Snake";
-	
-	public SnakeGameView() {
-		super(HEIGHT, WIDTH, WINDOWNAME);
-	}
-	
-	public void play() {launch();}
 
 	@Override
-	public void render() { // default implementation ignored 
+	public void render() { 
+		graphicsContext.clearRect(0, 0, canvasHeight, canvasWidth);
+		fillBackground( model.getBackground() );
+		drawSprites( model.getSprites() );
+		drawScore( ((SnakeGameModel) model).getScore() );
+		if ( ((SnakeGameModel) model).getWonLost() == 1) drawWin();
+		else if ( ((SnakeGameModel) model).getWonLost() == -1) drawLose();
 	}
-
-	public void render(Sprite backGround, List<Sprite> sprites, int score) 
-	{
-		graphicsContext.clearRect(0, 0, HEIGHT,WIDTH);
-		fillBackground( backGround );
-		drawSprites( sprites );
-		drawScore( score );
-	}
-	
 	
 	void drawScore(int score) { graphicsContext.fillText("" + score, 0, 0); }
 
