@@ -10,8 +10,8 @@ public class SnakeGameController extends Controller {
 
 	@Override
 	public void handleInput(List<String> input) {
-		if ( input.contains("Left") ) ((SnakeGameModel) model).goLeft();
-		if ( input.contains("Right") ) ((SnakeGameModel) model).goRight();
+		if ( input.contains("LEFT") ) ((SnakeGameModel) model).goLeft();
+		if ( input.contains("RIGHT") ) ((SnakeGameModel) model).goRight();
 	}
 
 	@Override

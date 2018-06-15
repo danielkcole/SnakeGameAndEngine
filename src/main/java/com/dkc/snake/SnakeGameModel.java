@@ -11,31 +11,31 @@ import com.dkc.snake.util.SnakeMath;
 import com.dkc.view.Sprite;
 
 public class SnakeGameModel extends Model {
-	ArrayList<BodyPart> bodyParts = new ArrayList<>();
-	Dot dot; 
-	BodyPart head;
-	int score = 0;
-	int wonLost = 0; // -1 is lost, 0 is still playing, 1 is won
-	static final int CHANGEINDEGREES = 5;
-	Sprite backGround;
+	private ArrayList<BodyPart> bodyParts = new ArrayList<>();
+	private Dot dot;
+	private BodyPart head;
+	private int score = 0;
+	private int wonLost = 0; // -1 is lost, 0 is still playing, 1 is won
+	private static final int CHANGEINDEGREES = 5;
 	
 	public SnakeGameModel() 
 	{
 		head = new BodyPart(160, 160, 0, 1);
+		head.changeToHead();
 		dot = new Dot(new Random().nextInt(300), new Random().nextInt(300));
 		
 		sprites.add(head.getSprite());
 		sprites.add(dot.getSprite());
 	}
-	
-	void spawnNewDot() 
+
+	private void spawnNewDot()
 	{
 		dot.setX(new Random().nextInt(300));
 		dot.setY(new Random().nextInt(300));
 		dot.refreshSprite();
 	}
-	
-	void addBody()
+
+	private void addBody()
 	{
 		double lastX; 
 		double lastY; 
@@ -61,17 +61,18 @@ public class SnakeGameModel extends Model {
 		bodyParts.add(new BodyPart( lastX - lastXDir,
 									lastY - lastYDir,
 									lastXDir,lastYDir));
+		sprites.add( bodyParts.get( bodyParts.size()-1 ).getSprite() );
 		score += 10;
 	}
-	
-	void checkWinLoss() {
+
+	private void checkWinLoss() {
 		//TODO collision
 		if (score >= 100 ) wonLost = 1;
 		else if (false) wonLost = -1;
 		else wonLost = 0;
 	}
-	
-	void updateSnake()
+
+	private void updateSnake()
 	{
 		//TODO change to update degrees
 		for(int i = bodyParts.size()-1; i > 0; i--)
@@ -102,11 +103,11 @@ public class SnakeGameModel extends Model {
 		head.setDegree( head.getDegree() - CHANGEINDEGREES );
 		head.setDir(SnakeMath.degreesToX(head.getDegree()), SnakeMath.degreesToY(head.getDegree()));
 	}
-	
-	void checkDotCollision() 
+
+	private void checkDotCollision()
 	{
 		//TODO collision
-		if (true)
+		if (false)
 		{
 			spawnNewDot();
 			addBody();
@@ -124,8 +125,10 @@ public class SnakeGameModel extends Model {
 	}
 
 	@Override
-	public void setBackground() {
-		try { backGround = new Sprite("Snake", 16, 16, 3, 3); } 
+	public Sprite setBackground()
+	{
+		try { return new Sprite("Snake", 16, 16, 3, 3); }
 		catch (IOException e) { e.printStackTrace(); }
+		return null;
 	}
 }

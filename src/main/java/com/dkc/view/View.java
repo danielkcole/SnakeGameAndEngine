@@ -16,11 +16,18 @@ public abstract class View
 	protected Model model;
 	
 	void drawSprite(Sprite sprite) 
-	  {
-		  if (sprite.getDegree() != 0)
+    {
+        if (sprite.getDegree() != 0)
 			  drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getDegree(), sprite.getX(), sprite.getY());
-		  else graphicsContext.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
-	  }
+        else graphicsContext.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
+    }
+
+    void drawSprite(Sprite sprite, double x, double y)
+    {
+        if (sprite.getDegree() != 0)
+            drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getDegree(), x, y);
+        else graphicsContext.drawImage(sprite.getImage(), x, y);
+    }
 	  
 	void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy)
 	{
@@ -38,9 +45,9 @@ public abstract class View
 	
 	protected void fillBackground(Sprite sprite)
 	{
-		  for ( double i = 0; i < canvasWidth; i += sprite.getWidth() ) 
-			  for ( double j = 0; j < canvasHeight; j += sprite.getHeight() )
-				  drawSprite(sprite);
+		  for ( double i = 0; i <= canvasWidth; i += sprite.getWidth() )
+			  for ( double j = 0; j <= canvasHeight; j += sprite.getHeight() )
+				  drawSprite(sprite, i, j);
 	}
 	
 	public void drawSprites(List<Sprite> sprites) {

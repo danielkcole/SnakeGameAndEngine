@@ -34,7 +34,8 @@ public abstract class GameEngine extends Application{
 	    rootGroup.getChildren().add( canvas );
 	    graphicsContext = canvas.getGraphicsContext2D();
 	    stage.setScene(scene);
-	    stage.setResizable(false);
+        stage.setResizable(false);
+        stage.sizeToScene();
 	    stage.show();
 	    
 	    controller = setController();

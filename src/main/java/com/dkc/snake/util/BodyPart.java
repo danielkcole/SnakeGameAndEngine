@@ -35,7 +35,17 @@ public class BodyPart extends GameObject implements IDrawable, IMoving {
 	public void setDegree( double newDegree ) { degree = newDegree; }
 	public double getDegree() { return degree; }
 	@Override
-	public void move() { x += xDir; y += yDir; refreshSprite();}
+	public void move() { x -= xDir; y -= yDir; refreshSprite();}
+
+	public void changeToHead()
+	{
+        try {
+            sprite.setImage(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, 0, 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 	@Override
 	public Sprite getSprite() { return sprite; }
 	@Override

@@ -3,6 +3,7 @@ package com.dkc.controller;
 import java.util.List;
 
 import com.dkc.model.Model;
+import com.dkc.snake.SnakeGameModel;
 import com.dkc.view.InputHandler;
 import com.dkc.view.View;
 
@@ -27,9 +28,12 @@ public abstract class Controller extends AnimationTimer{
 	
 	@Override
 	public void handle(long now) {
-		handleInput(inputHandler.getInput());
-		model.tick();
-		view.render();
+		handleInput( inputHandler.getInput() );
+		if ( inputHandler.getInput().contains("UP") )
+		{
+			model.tick();
+			view.render();
+		}
 	}
 	
 	public void setNewController(Controller newController)

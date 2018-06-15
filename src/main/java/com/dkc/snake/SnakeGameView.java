@@ -14,7 +14,7 @@ public class SnakeGameView extends View {
 		else if ( ((SnakeGameModel) model).getWonLost() == -1) drawLose();
 	}
 	
-	void drawScore(int score) { graphicsContext.fillText("" + score, 0, 0); }
+	void drawScore(int score) { graphicsContext.fillText("" + score, 10, 10); }
 
 	public void drawLose() { graphicsContext.fillText("You Lose!", 10, 10); }
 	

@@ -2,7 +2,7 @@ package com.dkc.model;
 
 import com.dkc.view.Sprite;
 
-public interface IDrawable {	
-	public Sprite getSprite();
-	public void refreshSprite();
+public interface IDrawable {
+	Sprite getSprite();
+	void refreshSprite();
 }
