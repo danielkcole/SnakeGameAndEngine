@@ -25,14 +25,14 @@ public abstract class View
 
 	void drawSprite(Sprite sprite) 
     {
-        if (sprite.getDegree() != 0)
-        {
-            imageView = new ImageView(sprite.getImage());
-            imageView.setRotate(sprite.getDegree());
-            rotatedImage = imageView.snapshot(snapshotParameters, null);
-            graphicsContext.drawImage(rotatedImage, sprite.getX(), sprite.getY());
-        }
-        else graphicsContext.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
+//        if (sprite.getDegree() != 0)
+//        {
+//            imageView = new ImageView(sprite.getImage());
+//            imageView.setRotate(sprite.getDegree());
+//            rotatedImage = imageView.snapshot(snapshotParameters, null);
+//            graphicsContext.drawImage(rotatedImage, sprite.getX(), sprite.getY());
+//        }
+//        else graphicsContext.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
 
 //        ImageView iv = new ImageView(sprite.getImage());
 //        iv.setRotate(sprite.getDegree());
@@ -40,10 +40,11 @@ public abstract class View
 //        params.setFill(Color.TRANSPARENT);
 //        Image rotatedImage = iv.snapshot(params, null);
 //        graphicsContext.drawImage(rotatedImage, sprite.getX(), sprite.getY());
-//
+
 //        if (sprite.getDegree() != 0)
-//			  drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getDegree(), sprite.getX(), sprite.getY());
-//        else graphicsContext.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
+			  drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getDegree(), sprite.getX(), sprite.getY());
+//        else
+//        	graphicsContext.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
     }
 
     void drawSprite(Sprite sprite, double x, double y)
@@ -55,9 +56,9 @@ public abstract class View
 //        Image rotatedImage = iv.snapshot(params, null);
 //        graphicsContext.drawImage(rotatedImage, x, y);
 
-        if (sprite.getDegree() != 0)
+//        if (sprite.getDegree() != 0)
             drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getDegree(), x, y);
-        else graphicsContext.drawImage(sprite.getImage(), x, y);
+//        else graphicsContext.drawImage(sprite.getImage(), x, y);
     }
 	  
 	void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy)

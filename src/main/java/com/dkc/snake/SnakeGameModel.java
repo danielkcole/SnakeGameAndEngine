@@ -94,13 +94,13 @@ public class SnakeGameModel extends Model {
 	
 	public void goLeft()
 	{
-		head.setDegree( head.getDegree() + CHANGEINDEGREES );
+		head.setDegree( head.getDegree() - CHANGEINDEGREES );
 		head.setDir(SnakeMath.degreesToX(head.getDegree()), SnakeMath.degreesToY(head.getDegree()));
 	}
 	
 	public void goRight()
 	{
-		head.setDegree( head.getDegree() - CHANGEINDEGREES );
+		head.setDegree( head.getDegree() + CHANGEINDEGREES );
 		head.setDir(SnakeMath.degreesToX(head.getDegree()), SnakeMath.degreesToY(head.getDegree()));
 	}
 
