@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.dkc.model.Model;
 
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
 public abstract class View
@@ -14,16 +17,44 @@ public abstract class View
 	protected double canvasHeight;
 	protected double canvasWidth;
 	protected Model model;
-	
+    ImageView imageView;
+    SnapshotParameters snapshotParameters = new SnapshotParameters();
+    Image rotatedImage;
+
+    public View() { snapshotParameters.setFill(Color.TRANSPARENT); }
+
 	void drawSprite(Sprite sprite) 
     {
         if (sprite.getDegree() != 0)
-			  drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getDegree(), sprite.getX(), sprite.getY());
+        {
+            imageView = new ImageView(sprite.getImage());
+            imageView.setRotate(sprite.getDegree());
+            rotatedImage = imageView.snapshot(snapshotParameters, null);
+            graphicsContext.drawImage(rotatedImage, sprite.getX(), sprite.getY());
+        }
         else graphicsContext.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
+
+//        ImageView iv = new ImageView(sprite.getImage());
+//        iv.setRotate(sprite.getDegree());
+//        SnapshotParameters params = new SnapshotParameters();
+//        params.setFill(Color.TRANSPARENT);
+//        Image rotatedImage = iv.snapshot(params, null);
+//        graphicsContext.drawImage(rotatedImage, sprite.getX(), sprite.getY());
+//
+//        if (sprite.getDegree() != 0)
+//			  drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getDegree(), sprite.getX(), sprite.getY());
+//        else graphicsContext.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
     }
 
     void drawSprite(Sprite sprite, double x, double y)
     {
+//        ImageView iv = new ImageView(sprite.getImage());
+//        iv.setRotate(sprite.getDegree());
+//        SnapshotParameters params = new SnapshotParameters();
+//        params.setFill(Color.TRANSPARENT);
+//        Image rotatedImage = iv.snapshot(params, null);
+//        graphicsContext.drawImage(rotatedImage, x, y);
+
         if (sprite.getDegree() != 0)
             drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getDegree(), x, y);
         else graphicsContext.drawImage(sprite.getImage(), x, y);

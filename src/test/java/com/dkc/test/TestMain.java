@@ -1,27 +1,55 @@
 package com.dkc.test;
 
-public class TestMain
+import com.dkc.controller.Controller;
+import com.dkc.view.InputHandler;
+import com.dkc.view.Sprite;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class TestMain extends Application
 {
-    public static void main(String... args) 
-    {
-        IntegerMath addition = (a, b) -> a + b;
-        IntegerMath subtraction = (a, b) -> a - b;
-        System.out.println("40 + 2 = " +
-            operateBinary(40, 2, addition));
-        System.out.println("20 - 10 = " +
-            operateBinary(20, 10, subtraction));    
+    Controller controller;
+    protected GraphicsContext graphicsContext;
+    Group rootGroup;
+    Scene scene;
+    Canvas canvas;
+    InputHandler inputHandler;
+
+    public void start(Stage stage) {
+        stage.setTitle("Test");
+        rootGroup = new Group();
+        scene = new Scene(rootGroup);
+        canvas = new Canvas(320, 320);
+        rootGroup.getChildren().add( canvas );
+        graphicsContext = canvas.getGraphicsContext2D();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.sizeToScene();
+        stage.show();
+        try {
+            drawSprite();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-	
-	static void changeString(String s) { s= "b"; }
-	
-    interface IntegerMath {
-        int operation(int a, int b);   
+    private void drawSprite() throws IOException {
+        Sprite sprite = new Sprite("Snake", 16, 16, 0, 0);
+        Image image = sprite.getImage();
+        ImageView iv = new ImageView(image);
+        iv.setRotate(180);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        Image rotatedImage = iv.snapshot(params, null);
+        graphicsContext.drawImage(rotatedImage, 0, 0);
     }
-    
-    public static int operateBinary(int a, int b, IntegerMath op) {
-        return op.operation(a, b);
-    }
- 
-    
-    IntegerMath addition = (a, b) -> a + b;
 }
