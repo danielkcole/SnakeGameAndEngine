@@ -10,43 +10,57 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
-public abstract class GameEngine extends Application{
-	Controller controller;
-	protected GraphicsContext graphicsContext;
-	Group rootGroup;
-	Scene scene; 
-	Canvas canvas;
-	String windowTitle = "Set windowName ";
-	int windowWidth;
-	int windowHeight;
-	InputHandler inputHandler;
-	
+/**
+ * Should be extended to create the entry point for your game, children are encouraged to implement main as the line
+ * "launch(args);".
+ */
+public abstract class GameEngine extends Application
+{
 	public void start(Stage stage) 
 	{
-		windowTitle = setWindowTitle();
-		windowWidth = setWindowWidth();
-		windowHeight = setWindowHeight();
+		String windowTitle = setWindowTitle();
+		int windowWidth = setWindowWidth();
+		int windowHeight = setWindowHeight();
 		
 		stage.setTitle(windowTitle);
-		rootGroup = new Group();
-	    scene = new Scene(rootGroup);
-	    canvas = new Canvas(windowWidth, windowHeight);
-	    rootGroup.getChildren().add( canvas );
-	    graphicsContext = canvas.getGraphicsContext2D();
+		Group rootGroup = new Group();
+		Scene scene = new Scene(rootGroup);
+		Canvas canvas = new Canvas(windowWidth, windowHeight);
+	    rootGroup.getChildren().add(canvas);
+		GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
 	    stage.setScene(scene);
         stage.setResizable(false);
         stage.sizeToScene();
 	    stage.show();
-	    
-	    controller = setController();
-	    inputHandler = new InputHandler(scene);
+
+		Controller controller = setController();
+		InputHandler inputHandler = new InputHandler(scene);
 	    controller.setInputHandler(inputHandler);
 	    controller.setGraphicsContext(graphicsContext, canvas.getHeight(), canvas.getWidth());
 	    controller.start();
 	}
-	
+
+	/**
+	 * Should return the title for the game window.
+	 * @return The title for the game window.
+	 */
 	protected abstract String setWindowTitle();
+
+	/**
+	 * Should return the width for the game window.
+	 * @return The width for the game window.
+	 */
 	protected abstract int setWindowWidth();
+
+	/**
+	 * Should return the height for the game window.
+	 * @return The height for the game window.
+	 */
 	protected abstract int setWindowHeight();
+
+	/**
+	 * Should return the Controller to handle the entry point for the game, like the main menu.
+	 * @return The initial controller for the game.
+	 */
 	protected abstract Controller setController();
 }

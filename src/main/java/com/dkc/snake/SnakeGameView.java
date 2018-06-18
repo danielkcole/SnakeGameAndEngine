@@ -2,10 +2,11 @@ package com.dkc.snake;
 
 import com.dkc.view.View;
 
-public class SnakeGameView extends View {
-
+public class SnakeGameView extends View
+{
 	@Override
-	public void render() { 
+	public void render()
+	{
 		graphicsContext.clearRect(0, 0, canvasHeight, canvasWidth);
 		fillBackground( model.getBackground() );
 		drawSprites( model.getSprites() );
@@ -14,9 +15,9 @@ public class SnakeGameView extends View {
 		else if ( ((SnakeGameModel) model).getWonLost() == -1) drawLose();
 	}
 	
-	void drawScore(int score) { graphicsContext.fillText("" + score, 10, 10); }
+	private void drawScore(int score) { graphicsContext.fillText("" + score, 10, 10); }
 
-	public void drawLose() { graphicsContext.fillText("You Lose!", 10, 10); }
+	private void drawLose() { graphicsContext.fillText("You Lose!", 10, 10); }
 	
-	public void drawWin() { graphicsContext.fillText("You Win!", 10, 10); }
+	private void drawWin() { graphicsContext.fillText("You Win!", 10, 10); }
 }

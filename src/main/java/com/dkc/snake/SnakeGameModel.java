@@ -10,13 +10,14 @@ import com.dkc.snake.util.Dot;
 import com.dkc.snake.util.SnakeMath;
 import com.dkc.view.Sprite;
 
-public class SnakeGameModel extends Model {
-	private ArrayList<BodyPart> bodyParts = new ArrayList<>();
-	private Dot dot;
-	private BodyPart head;
+public class SnakeGameModel extends Model
+{
+	private final ArrayList<BodyPart> bodyParts = new ArrayList<>();
+	private final Dot dot;
+	private final BodyPart head;
 	private int score = 0;
 	private int wonLost = 0; // -1 is lost, 0 is still playing, 1 is won
-	private static final int CHANGEINDEGREES = 5;
+	private static final int CHANGEINANGLE = 5;
 	
 	public SnakeGameModel() 
 	{
@@ -65,7 +66,8 @@ public class SnakeGameModel extends Model {
 		score += 10;
 	}
 
-	private void checkWinLoss() {
+	private void checkWinLoss()
+	{
 		//TODO collision
 		if (score >= 100 ) wonLost = 1;
 		else if (false) wonLost = -1;
@@ -80,28 +82,28 @@ public class SnakeGameModel extends Model {
 			bodyParts.get(i).move();
 			bodyParts.get(i).setDir( bodyParts.get(i-1).getXDir(),
 								bodyParts.get(i-1).getYDir());
-			bodyParts.get(i).setDegree( bodyParts.get(i-1).getDegree() );
+			bodyParts.get(i).setAngle( bodyParts.get(i-1).getAngle() );
 		}
 		if ( !bodyParts.isEmpty() )
 		{
 			bodyParts.get(0).move();
 			bodyParts.get(0).setDir( head.getXDir(),
 								head.getYDir());
-			bodyParts.get(0).setDegree( head.getDegree() );
+			bodyParts.get(0).setAngle( head.getAngle() );
 		}
 		head.move();
 	}
 	
 	public void goLeft()
 	{
-		head.setDegree( head.getDegree() - CHANGEINDEGREES );
-		head.setDir(SnakeMath.degreesToX(head.getDegree()), SnakeMath.degreesToY(head.getDegree()));
+		head.setAngle( head.getAngle() - CHANGEINANGLE);
+		head.setDir(SnakeMath.angleToXDir(head.getAngle()), SnakeMath.angleToYDir(head.getAngle()));
 	}
 	
 	public void goRight()
 	{
-		head.setDegree( head.getDegree() + CHANGEINDEGREES );
-		head.setDir(SnakeMath.degreesToX(head.getDegree()), SnakeMath.degreesToY(head.getDegree()));
+		head.setAngle( head.getAngle() + CHANGEINANGLE);
+		head.setDir(SnakeMath.angleToXDir(head.getAngle()), SnakeMath.angleToYDir(head.getAngle()));
 	}
 
 	private void checkDotCollision()
@@ -113,11 +115,9 @@ public class SnakeGameModel extends Model {
 			addBody();
 		}
 	}
-	
-	public int getScore() { return score; }
-	public int getWonLost() { return wonLost; }
 
-	public void tick() {
+	public void tick()
+	{
 		checkWinLoss();
 		if (wonLost != 0) return;
 		updateSnake();
@@ -131,4 +131,8 @@ public class SnakeGameModel extends Model {
 		catch (IOException e) { e.printStackTrace(); }
 		return null;
 	}
+
+	public int getScore() { return score; }
+
+	public int getWonLost() { return wonLost; }
 }

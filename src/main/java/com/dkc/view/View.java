@@ -4,76 +4,91 @@ import java.util.List;
 
 import com.dkc.model.Model;
 
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
+/**
+ * Base class to be extended for each View to be associated with a game state, provides base functionality for drawing.
+ */
 public abstract class View
 {
 	protected GraphicsContext graphicsContext;
 	protected double canvasHeight;
 	protected double canvasWidth;
 	protected Model model;
-    ImageView imageView;
-    SnapshotParameters snapshotParameters = new SnapshotParameters();
-    Image rotatedImage;
+	protected Rotate rotate;
 
-    public View() { snapshotParameters.setFill(Color.TRANSPARENT); }
-
-	void drawSprite(Sprite sprite) 
-    {
-//        if (sprite.getDegree() != 0)
-//        {
-//            imageView = new ImageView(sprite.getImage());
-//            imageView.setRotate(sprite.getDegree());
-//            rotatedImage = imageView.snapshot(snapshotParameters, null);
-//            graphicsContext.drawImage(rotatedImage, sprite.getX(), sprite.getY());
-//        }
-//        else graphicsContext.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
-
-//        ImageView iv = new ImageView(sprite.getImage());
-//        iv.setRotate(sprite.getDegree());
-//        SnapshotParameters params = new SnapshotParameters();
-//        params.setFill(Color.TRANSPARENT);
-//        Image rotatedImage = iv.snapshot(params, null);
-//        graphicsContext.drawImage(rotatedImage, sprite.getX(), sprite.getY());
-
-//        if (sprite.getDegree() != 0)
-			  drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getDegree(), sprite.getX(), sprite.getY());
+//	private void drawSprite(Sprite sprite)
+//    {
+//        if (sprite.getAngle() != 0)
+//			  drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getAngle(), sprite.getX(), sprite.getY());
 //        else
 //        	graphicsContext.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
-    }
+//    }
 
-    void drawSprite(Sprite sprite, double x, double y)
-    {
-//        ImageView iv = new ImageView(sprite.getImage());
-//        iv.setRotate(sprite.getDegree());
-//        SnapshotParameters params = new SnapshotParameters();
-//        params.setFill(Color.TRANSPARENT);
-//        Image rotatedImage = iv.snapshot(params, null);
-//        graphicsContext.drawImage(rotatedImage, x, y);
+	/**
+	 * Draws a sprite at the given cords, corresponding to the top left corner of the image.
+	 * @param sprite sprite to draw.
+	 * @param x x cord.
+	 * @param y y cord with 0 at the top.
+	 */
+	private void drawSprite(Sprite sprite, double x, double y)
+	{
+		graphicsContext.drawImage(sprite.getImage(), x, y);
+	}
 
-//        if (sprite.getDegree() != 0)
-            drawRotatedImage(graphicsContext, sprite.getImage(), sprite.getDegree(), x, y);
+	/**
+	 * Draws a sprite at the given cords, corresponding to the top left corner of the image, handles rotated sprites.
+	 * @param sprite sprite to draw.
+	 * @param x x cord.
+	 * @param y y cord with 0 at the top.
+	 * @param angle angle to be drawn at.
+	 */
+	private void drawSprite(Sprite sprite, double x, double y, double angle)
+	{
+		if (angle != 0)
+			drawRotatedImage(sprite.getImage(), angle, x, y);
+		else graphicsContext.drawImage(sprite.getImage(), x, y);
+	}
+
+	/**
+	 * Handles rotated images
+	 * @param image image to draw.
+	 * @param angle angle of rotation around center.
+	 * @param x x pos.
+	 * @param y y pos.
+	 */
+	private void drawRotatedImage(Image image, double angle, double x, double y)
+	{
+		graphicsContext.save(); // saves the current state on stack, including the current transform
+		rotate = new Rotate(angle);
+		graphicsContext.setTransform(rotate.getMxx(), rotate.getMyx(), rotate.getMxy(), rotate.getMyy(),
+				rotate.getTx(), rotate.getTy());
+		graphicsContext.drawImage(image, x, y);
+		graphicsContext.restore(); // back to original state (before rotation)
+	}
+
+//	private void drawSprite(Sprite sprite, double x, double y, double angle)
+//    {
+//        if (angle != 0)
+//            drawRotatedImage(graphicsContext, sprite.getImage(), angle, x, y);
 //        else graphicsContext.drawImage(sprite.getImage(), x, y);
-    }
-	  
-	void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy)
-	{
-		gc.save(); // saves the current state on stack, including the current transform
-		rotate(gc, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
-		gc.drawImage(image, tlpx, tlpy);
-		gc.restore(); // back to original state (before rotation)
-	}
-	  
-	void rotate(GraphicsContext gc, double angle, double px, double py) 
-	{
-		Rotate r = new Rotate(angle, px, py);
-		gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
-	}
+//    }
+//
+//	private void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy)
+//	{
+//		gc.save(); // saves the current state on stack, including the current transform
+//		rotate(gc, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
+//		gc.drawImage(image, tlpx, tlpy);
+//		gc.restore(); // back to original state (before rotation)
+//	}
+//
+//	private void rotate(GraphicsContext gc, double angle, double px, double py)
+//	{
+//		Rotate r = new Rotate(angle, px, py);
+//		gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
+//	}
 	
 	protected void fillBackground(Sprite sprite)
 	{
@@ -82,7 +97,7 @@ public abstract class View
 				  drawSprite(sprite, i, j);
 	}
 	
-	public void drawSprites(List<Sprite> sprites) {
+	protected void drawSprites(List<Sprite> sprites) {
 		for (Sprite sprite : sprites) drawSprite(sprite);
 	}
 	

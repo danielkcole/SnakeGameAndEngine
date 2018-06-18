@@ -9,17 +9,22 @@ import com.dkc.model.IMoving;
 import com.dkc.view.Sprite;
 
 
-public class BodyPart extends GameObject implements IDrawable, IMoving {
-	double degree; double xDir; double yDir; Sprite sprite;
-	final int SPRITEHEIGHT= 16; final int SPRITEWIDTH= 16;
-	final int SPRITECOL = 0; final int SPRITEROW = 3;
-	final String IMAGELOCATION = "Snake";
+public class BodyPart extends GameObject implements IDrawable, IMoving
+{
+	private final int SPRITEHEIGHT= 16;
+	private final int SPRITEWIDTH= 16;
+	private final String IMAGELOCATION = "Snake";
+	private double xDir;
+	private double yDir;
+	private Sprite sprite;
 	
-	public BodyPart(double newX, double newY)
+	private BodyPart(double newX, double newY)
 	{
 		x = newX; y = newY;
 		xDir = 0; yDir = 0;
 		try {
+			int SPRITECOL = 0;
+			int SPRITEROW = 3;
 			sprite = new Sprite(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -31,11 +36,9 @@ public class BodyPart extends GameObject implements IDrawable, IMoving {
 	{
 		this(newX, newY); xDir = newXDir; yDir = newYDir;
 	}
-	
-	public void setDegree( double newDegree ) { degree = newDegree; }
-	public double getDegree() { return degree; }
+
 	@Override
-	public void move() { x -= xDir; y -= yDir; refreshSprite();}
+	public void move() { x += xDir; y -= yDir; refreshSprite();}
 
 	public void changeToHead()
 	{
@@ -45,7 +48,6 @@ public class BodyPart extends GameObject implements IDrawable, IMoving {
             e.printStackTrace();
         }
     }
-
 	@Override
 	public Sprite getSprite() { return sprite; }
 	@Override
@@ -55,6 +57,6 @@ public class BodyPart extends GameObject implements IDrawable, IMoving {
 	@Override
 	public double getYDir() { return yDir; }
 	@Override
-	public void refreshSprite() { sprite.setPos(x, y); sprite.setDegree(degree);}
+	public void refreshSprite() { sprite.setPos(x, y); sprite.setAngle(angle);}
 	
 }
