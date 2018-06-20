@@ -9,6 +9,7 @@ import com.dkc.model.GameObject;
 
 public class Dot extends GameObject implements IDrawable {
 	private Sprite sprite;
+	private boolean visible = true;
 
 	public Dot(int newX, int newY)
 	{
@@ -21,11 +22,12 @@ public class Dot extends GameObject implements IDrawable {
 			String IMAGELOCATION = "Snake";
 			sprite = new Sprite(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW); }
 		catch (IOException e) { e.printStackTrace(); }
-		sprite.setPos(x, y);
 	}
 
 	@Override
 	public Sprite getSprite() { return sprite; }
 	@Override
-	public void refreshSprite() { sprite.setPos(x, y);}
+	public boolean getVisible() { return visible; }
+	@Override
+	public void setVisible(boolean v) { visible = v; }
 }

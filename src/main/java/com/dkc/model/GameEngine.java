@@ -14,6 +14,7 @@ import javafx.stage.Stage;
  * Should be extended to create the entry point for your game, children are encouraged to implement main as the line
  * "launch(args);".
  */
+@SuppressWarnings("SameReturnValue")
 public abstract class GameEngine extends Application
 {
 	public void start(Stage stage) 

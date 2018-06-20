@@ -21,7 +21,7 @@ public class ResourceLoader
 	 * Loads an a sprite to a JavaFX Image.
 	 * @param fileName the name of the file that holds the sprite.
 	 * @return JavaFX Image of the sprite.
-	 * @throws IOException
+	 * @throws IOException if image is not found.
 	 */
 	public static Image getImage(String fileName) throws IOException
 	{
@@ -40,7 +40,7 @@ public class ResourceLoader
 	 * @param col which column of the sprite sheet the sprite appears on.
 	 * @param row which row of the sprite sheet the sprite appears on.
 	 * @return JavaFX Image of the sprite.
-	 * @throws IOException
+	 * @throws IOException if image is not found.
 	 */
 	public static Image getImage(String fileName, int h, int w, int col, int row) throws IOException
 	{

@@ -20,18 +20,15 @@ public abstract class Controller extends AnimationTimer
 	protected final Model model;
 	private InputHandler inputHandler;
 
+	/**
+	 * Calls the extended methods in order to initiate the Controller.
+	 */
 	protected Controller()
 	{
 		view = setView();
 		model = setModel();
 		view.setModel(model);
 	}
-
-	/**
-	 * Should call methods in the Model to handle the input.
-	 * @param input holds all of the keys pressed for this frame like "LEFT".
-	 */
-	protected abstract void handleInput(List<String> input);
 
 	/**
 	 * Should return View to be associated with this controller.
@@ -46,10 +43,12 @@ public abstract class Controller extends AnimationTimer
 	protected abstract Model setModel();
 
 	/**
-	 * Logic to determine if there is a controller change, do nothing to continue with the same controller,
+	 * Should call methods in the Model to handle the input and hold the logic to determine if there is a controller
+	 * change, do nothing to continue with the same controller,
 	 * to switch controllers instantiate the next controller and pass it to nextController().
+	 * @param input holds all of the keys pressed for this frame like "LEFT".
 	 */
-	protected abstract void tick();
+	protected abstract void tick(List<String> input);
 
 	/**
 	 * Calls Controller tick then gets input and calls handleInput on it,
@@ -59,11 +58,11 @@ public abstract class Controller extends AnimationTimer
 	@Override
 	public void handle(long now)
 	{
-		tick();
-		handleInput( inputHandler.getInput() );
+		tick(inputHandler.getInput());
 		if ( inputHandler.getInput().contains("UP") )
 		{
 			model.tick();
+			view.preRender();
 			view.render();
 		}
 	}
@@ -72,6 +71,7 @@ public abstract class Controller extends AnimationTimer
 	 * Stops current game loop and passes the input handler down to the next Controller, then starts it.
 	 * @param newController the controller to switch to
 	 */
+	@SuppressWarnings("unused")
 	public void nextController(Controller newController)
 	{
 		//TODO create a controller stack in order to return to previous states

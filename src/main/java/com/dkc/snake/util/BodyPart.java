@@ -17,6 +17,7 @@ public class BodyPart extends GameObject implements IDrawable, IMoving
 	private double xDir;
 	private double yDir;
 	private Sprite sprite;
+	private boolean visible = true;
 	
 	private BodyPart(double newX, double newY)
 	{
@@ -29,7 +30,6 @@ public class BodyPart extends GameObject implements IDrawable, IMoving
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		refreshSprite();
 	}
 	
 	public BodyPart(double newX, double newY, double newXDir, double newYDir)
@@ -37,26 +37,29 @@ public class BodyPart extends GameObject implements IDrawable, IMoving
 		this(newX, newY); xDir = newXDir; yDir = newYDir;
 	}
 
-	@Override
-	public void move() { x += xDir; y -= yDir; refreshSprite();}
-
 	public void changeToHead()
 	{
-        try {
-            sprite.setImage(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, 0, 0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+		try {
+			sprite.setImage(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, 0, 0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void move() { x += xDir*2; y -= yDir*2;}
+	public void moveH() { x += xDir; y -= yDir;}
 	@Override
 	public Sprite getSprite() { return sprite; }
+	@Override
+	public boolean getVisible() { return visible; }
+	@Override
+	public void setVisible(boolean v) { visible = v; }
 	@Override
 	public void setDir(double newXDir, double newYDir) { xDir = newXDir; yDir = newYDir; }
 	@Override
 	public double getXDir() { return xDir; }
 	@Override
 	public double getYDir() { return yDir; }
-	@Override
-	public void refreshSprite() { sprite.setPos(x, y); sprite.setAngle(angle);}
 	
 }

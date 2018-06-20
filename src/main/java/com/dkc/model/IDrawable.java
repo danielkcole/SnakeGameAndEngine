@@ -5,6 +5,7 @@ import com.dkc.view.Sprite;
 /**
  * An object should implement IDrawable if it has a sprite associated with it.
  */
+@SuppressWarnings("unused")
 public interface IDrawable
 {
 	/**
@@ -14,8 +15,43 @@ public interface IDrawable
 	Sprite getSprite();
 
 	/**
-	 * Returns true if the object is visible.
+	 * Should return true if the object is visible.
 	 * @return true if the object is visible.
 	 */
 	boolean getVisible();
+
+	/**
+	 * @param v true if object should be drawn
+	 */
+	void setVisible(boolean v);
+
+	/**
+	 * @return current X cord
+	 */
+	double getX();
+
+	/**
+	 * @return current X cord
+	 */
+	double getY();
+
+	/**
+	 * @return current angle
+	 */
+	double getAngle();
+
+	/**
+	 * @param newX new X cord
+	 */
+	void setX( double newX );
+
+	/**
+	 * @param newY new Y cord
+	 */
+	void setY( double newY );
+
+	/**
+	 * @param newAngle new angle
+	 */
+	void setAngle( double newAngle );
 }

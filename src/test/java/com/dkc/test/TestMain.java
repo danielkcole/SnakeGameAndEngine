@@ -44,6 +44,16 @@ class TestMain
 {
     public static void main(String[] args)
     {
-        System.out.println(SnakeMath.angleToXDir(0));
+        double x1 = 0; double y1 = 0;
+        double x2 = -1; double y2 = 0;
+//        double angle = Math.toDegrees( Math.atan2(y2 - y1, x2 - x1));
+//		if (angle < 0) angle += 360; if (angle >360) angle -= 360;
+//		angle += 90; if (angle < 0) angle += 360; if (angle >360) angle -= 360;
+//        System.out.println("Angle: " + angle + "\n" );
+
+        double changeInX = x2-x1; double changeInY = y2-y1;
+        double angle = SnakeMath.toAngle(changeInY, changeInX);
+		if (angle < 0) angle += 360; if (angle > 360) angle -= 360;
+		System.out.println("Angle: " + angle + "\n" );
     }
 }

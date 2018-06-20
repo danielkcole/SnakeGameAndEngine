@@ -1,18 +1,21 @@
 package com.dkc.model;
 
-		import java.util.ArrayList;
-		import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
-		import com.dkc.view.Sprite;
+import com.dkc.view.Sprite;
 
 /**
  * Should hold all of the data associated with a game state.
  */
 public abstract class Model
 {
-	private Sprite background; //TODO be able to handle sprite maps. Use strategy pattern?
-	protected ArrayList<IDrawable> drawableObjects = new ArrayList<>();
+	private final Sprite background; //TODO be able to handle sprite maps. Use strategy pattern?
+	protected final ArrayList<IDrawable> drawableObjects = new ArrayList<>();
 
+	/**
+	 * Calls extended method to set the background.
+	 */
 	protected Model() { background = setBackground(); }
 
 	/**

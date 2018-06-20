@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.dkc.model.GameObject;
 import com.dkc.model.Model;
 import com.dkc.snake.util.BodyPart;
 import com.dkc.snake.util.Dot;
@@ -25,15 +26,15 @@ public class SnakeGameModel extends Model
 		head.changeToHead();
 		dot = new Dot(new Random().nextInt(300), new Random().nextInt(300));
 		
-		sprites.add(head.getSprite());
-		sprites.add(dot.getSprite());
+		drawableObjects.add(head);
+		drawableObjects.add(dot);
 	}
 
 	private void spawnNewDot()
 	{
 		dot.setX(new Random().nextInt(300));
 		dot.setY(new Random().nextInt(300));
-		dot.refreshSprite();
+		score += 10;
 	}
 
 	private void addBody()
@@ -42,7 +43,7 @@ public class SnakeGameModel extends Model
 		double lastY; 
 		double lastXDir; 
 		double lastYDir; 
-		int lastIndex;
+		//int lastIndex;
 		if (bodyParts.isEmpty()) 
 		{ 
 			lastX = head.getX(); 
@@ -52,44 +53,57 @@ public class SnakeGameModel extends Model
 		}
 		else
 		{
-			lastIndex = bodyParts.size()-1;
+			int lastIndex = bodyParts.size()-1;
 			lastX = bodyParts.get(lastIndex).getX(); 
 			lastY = bodyParts.get(lastIndex).getY();
 			lastXDir = bodyParts.get(lastIndex).getXDir();
 			lastYDir = bodyParts.get(lastIndex).getYDir();
 		}
 		
-		bodyParts.add(new BodyPart( lastX - lastXDir,
-									lastY - lastYDir,
+		bodyParts.add(new BodyPart( lastX - lastXDir*15,
+									lastY + lastYDir*15,
 									lastXDir,lastYDir));
-		sprites.add( bodyParts.get( bodyParts.size()-1 ).getSprite() );
-		score += 10;
+		drawableObjects.add( bodyParts.get( bodyParts.size()-1 ) );
 	}
 
-	private void checkWinLoss()
+	private int checkWinLoss()
 	{
-		//TODO collision
-		if (score >= 100 ) wonLost = 1;
-		else if (false) wonLost = -1;
-		else wonLost = 0;
+		double headCenterX = head.getX() + head.getSprite().getWidth() / 2;
+		double headCenterY = head.getY() + head.getSprite().getHeight() / 2;
+		double bodyCenterX;
+		double bodyCenterY;
+		double distance;
+		if (score >= 150 ) return 1;
+		if (headCenterX < 7 || headCenterX > 314 || headCenterY < 7 || headCenterY > 314) return -1;
+		for(int i = bodyParts.size()-1; i > 0; i--)
+		{
+			bodyCenterX = bodyParts.get(i).getX() + bodyParts.get(i).getSprite().getWidth() / 2;
+			bodyCenterY = bodyParts.get(i).getY() + bodyParts.get(i).getSprite().getHeight() / 2;
+			distance = Math.hypot(headCenterX - bodyCenterX, headCenterY - bodyCenterY);
+			if (distance < 14 && distance > -14) return -1;
+		}
+		return 0;
 	}
 
 	private void updateSnake()
 	{
-		//TODO change to update degrees
 		for(int i = bodyParts.size()-1; i > 0; i--)
 		{
 			bodyParts.get(i).move();
-			bodyParts.get(i).setDir( bodyParts.get(i-1).getXDir(),
-								bodyParts.get(i-1).getYDir());
-			bodyParts.get(i).setAngle( bodyParts.get(i-1).getAngle() );
+			double changeInX = bodyParts.get(i-1).getX()-bodyParts.get(i).getX();
+			double changeInY = (0-bodyParts.get(i-1).getY()) - (0-bodyParts.get(i).getY());
+			double angle = SnakeMath.toAngle(changeInY, changeInX);
+			bodyParts.get(i).setDir( SnakeMath.angleToXDir(angle), SnakeMath.angleToYDir(angle) );
+			bodyParts.get(i).setAngle(angle);
 		}
 		if ( !bodyParts.isEmpty() )
 		{
 			bodyParts.get(0).move();
-			bodyParts.get(0).setDir( head.getXDir(),
-								head.getYDir());
-			bodyParts.get(0).setAngle( head.getAngle() );
+			double changeInX = head.getX()-bodyParts.get(0).getX();
+			double changeInY = (0-head.getY()) - (0-bodyParts.get(0).getY());
+			double angle = SnakeMath.toAngle(changeInY, changeInX);
+			bodyParts.get(0).setDir( SnakeMath.angleToXDir(angle), SnakeMath.angleToYDir(angle) );
+			bodyParts.get(0).setAngle(angle);
 		}
 		head.move();
 	}
@@ -98,27 +112,37 @@ public class SnakeGameModel extends Model
 	{
 		head.setAngle( head.getAngle() - CHANGEINANGLE);
 		head.setDir(SnakeMath.angleToXDir(head.getAngle()), SnakeMath.angleToYDir(head.getAngle()));
+		head.moveH();
 	}
 	
 	public void goRight()
 	{
 		head.setAngle( head.getAngle() + CHANGEINANGLE);
 		head.setDir(SnakeMath.angleToXDir(head.getAngle()), SnakeMath.angleToYDir(head.getAngle()));
+		head.moveH();
 	}
 
 	private void checkDotCollision()
 	{
-		//TODO collision
-		if (false)
+		double headCenterX = head.getX() + head.getSprite().getWidth()/2;
+		double headCenterY = head.getY() + head.getSprite().getHeight()/2;
+		double dotCenterX = dot.getX() + dot.getSprite().getWidth()/2;
+		double dotCenterY = dot.getY() + dot.getSprite().getHeight()/2;
+
+		double distance = Math.hypot(headCenterX-dotCenterX, headCenterY-dotCenterY);
+
+		if ( distance < 15 && distance > -15 )
 		{
 			spawnNewDot();
+			addBody();
+			addBody();
 			addBody();
 		}
 	}
 
 	public void tick()
 	{
-		checkWinLoss();
+		wonLost = checkWinLoss();
 		if (wonLost != 0) return;
 		updateSnake();
 		checkDotCollision();

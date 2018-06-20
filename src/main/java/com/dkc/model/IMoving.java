@@ -3,6 +3,7 @@ package com.dkc.model;
 /**
  * An object should implement IMoving if it moves.
  */
+@SuppressWarnings("ALL")
 public interface IMoving
 {
 	/**
@@ -13,17 +14,16 @@ public interface IMoving
 	void setDir(double newXDir, double newYDir);
 
 	/**
-	 * Returns the new change in X per frame.
-	 * @return The new change in X per frame.
+	 * Returns the change in X per frame.
+	 * @return The change in X per frame.
 	 */
 	double getXDir();
 
 	/**
-	 * Returns the new change in Y per frame.
-	 * @return The new change in Y per frame.
+	 * Returns the change in Y per frame.
+	 * @return The change in Y per frame.
 	 */
 	double getYDir();
-
 
 	/**
 	 * Should usually be x += xDir, y -+= yDir,
