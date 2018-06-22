@@ -59,22 +59,17 @@ public abstract class Controller extends AnimationTimer
 	public void handle(long now)
 	{
 		tick(inputHandler.getInput());
-		if ( inputHandler.getInput().contains("UP") )
-		{
-			model.tick();
-			view.preRender();
-			view.render();
-		}
+		model.tick();
+		view.preRender();
+		view.render();
 	}
 
 	/**
 	 * Stops current game loop and passes the input handler down to the next Controller, then starts it.
 	 * @param newController the controller to switch to
 	 */
-	@SuppressWarnings("unused")
 	public void nextController(Controller newController)
 	{
-		//TODO create a controller stack in order to return to previous states
 		stop();
 		newController.setInputHandler(inputHandler);
 		newController.start();
@@ -82,7 +77,7 @@ public abstract class Controller extends AnimationTimer
 
 	/**
 	 * Used for setting a new controller.
-	 * @param ih cuurent InputHandler
+	 * @param ih current InputHandler
 	 */
 	public void setInputHandler(InputHandler ih) { inputHandler = ih; }
 

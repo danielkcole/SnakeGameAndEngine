@@ -7,26 +7,52 @@ import com.dkc.util.ResourceLoader;
 import javafx.scene.image.Image;
 
 public class Sprite {
-	//TODO comments
 	private Image image;
 	private double height;
 	private double width;
-	
-	
-	@SuppressWarnings("unused")
+
+
+	/**
+	 * Constructor for sprites where the sprite is the full file.
+	 * @param imageName name of sprite's file.
+	 * @throws IOException if file is not found.
+	 */
 	private Sprite(String imageName) throws IOException { setImage(imageName); }
 
-	public Sprite(String imageLocation, int h, int w, int col, int row) throws IOException
+	/**
+	 * Constructor for a sprite within a sprite sheet.
+	 * @param imageName name of sprite's file.
+	 * @param h height in pixels of the sprite.
+	 * @param w width in pixels of the sprite.
+	 * @param col column of the sprite within the sprite sheet.
+	 * @param row row of the sprite within the sprite sheet.
+	 * @throws IOException if file is not found.
+	 */
+	public Sprite(String imageName, int h, int w, int col, int row) throws IOException
 	{
-		setImage(imageLocation, h, w, col, row);
+		setImage(imageName, h, w, col, row);
 	}
 
-	private void setImage(String imageName) throws IOException
+	/**
+	 * Setter used for changes the image of the sprite.
+	 * @param imageName name of sprite's file.
+	 * @throws IOException if file is not found.
+	 */
+	public void setImage(String imageName) throws IOException
 	{	
 		image = ResourceLoader.getImage(imageName);
 		height = image.getHeight(); width = image.getWidth();
 	}
-	
+
+	/**
+	 * Setter used for changes the image of the sprite.
+	 * @param imageName name of sprite's file.
+	 * @param h height in pixels of the sprite.
+	 * @param w width in pixels of the sprite.
+	 * @param col column of the sprite within the sprite sheet.
+	 * @param row row of the sprite within the sprite sheet.
+	 * @throws IOException if file is not found.
+	 */
 	public void setImage(String imageName, int h, int w, int col, int row) throws IOException
 	{	
 		image = ResourceLoader.getImage(imageName, h, w, col, row);

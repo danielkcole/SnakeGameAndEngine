@@ -10,7 +10,6 @@ import javafx.scene.input.KeyEvent;
 /**
  * Associates with a view in order to handle input, currently only keyboard inputs.
  */
-@SuppressWarnings("Convert2Lambda")
 public class InputHandler
 {
 	private final ArrayList<String> input = new ArrayList<>();

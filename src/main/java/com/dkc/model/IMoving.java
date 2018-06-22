@@ -3,7 +3,6 @@ package com.dkc.model;
 /**
  * An object should implement IMoving if it moves.
  */
-@SuppressWarnings("ALL")
 public interface IMoving
 {
 	/**

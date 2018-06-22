@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.dkc.model.GameObject;
 import com.dkc.model.Model;
 import com.dkc.snake.util.BodyPart;
 import com.dkc.snake.util.Dot;

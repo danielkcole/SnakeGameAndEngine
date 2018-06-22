@@ -17,7 +17,6 @@ public abstract class View
 	private double canvasHeight;
 	private double canvasWidth;
 	protected Model model;
-	private Rotate r;
 	private List<IDrawable> drawableObjects;
 
 	/**
@@ -69,7 +68,7 @@ public abstract class View
 	 */
 	private void rotate(double angle, double px, double py)
 	{
-		r = new Rotate(angle, px, py);
+		Rotate r = new Rotate(angle, px, py);
 		graphicsContext.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
 	}
 
@@ -117,7 +116,6 @@ public abstract class View
 	 */
 	public void preRender()
 	{
-		//TODO comments
 		graphicsContext.clearRect(0, 0, canvasHeight, canvasWidth);
 		fillBackground( model.getBackground() );
 		for (IDrawable go : drawableObjects)

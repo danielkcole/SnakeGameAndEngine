@@ -5,7 +5,6 @@ import com.dkc.view.Sprite;
 /**
  * An object should implement IDrawable if it has a sprite associated with it.
  */
-@SuppressWarnings("unused")
 public interface IDrawable
 {
 	/**
