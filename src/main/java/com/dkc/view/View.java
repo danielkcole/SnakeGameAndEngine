@@ -116,10 +116,16 @@ public abstract class View
 	 */
 	public void preRender()
 	{
-		graphicsContext.clearRect(0, 0, canvasHeight, canvasWidth);
+		clear();
 		fillBackground( model.getBackground() );
 		for (IDrawable go : drawableObjects)
 			if ( go.getVisible() )
 				drawSprite(go.getSprite(), go.getX(), go.getY(), go.getAngle());
 	}
+
+	public void clear() { graphicsContext.clearRect(0, 0, canvasHeight, canvasWidth); } //TODO comment
+
+	public GraphicsContext getGraphicsContext() { return graphicsContext; }
+	public Double getCanvasHeight() { return canvasHeight; }
+	public Double getCanvasWidth() { return canvasWidth; }
 }

@@ -17,7 +17,7 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class Controller extends AnimationTimer
 {
 	private final View view;
-	protected final Model model;
+	protected Model model;
 	private InputHandler inputHandler;
 
 	/**
@@ -71,7 +71,9 @@ public abstract class Controller extends AnimationTimer
 	public void nextController(Controller newController)
 	{
 		stop();
+		view.clear();
 		newController.setInputHandler(inputHandler);
+		newController.setGraphicsContext(view.getGraphicsContext(), view.getCanvasHeight(), view.getCanvasWidth());
 		newController.start();
 	}
 

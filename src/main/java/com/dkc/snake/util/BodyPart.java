@@ -13,6 +13,8 @@ public class BodyPart extends GameObject implements IDrawable, IMoving
 {
 	private final int SPRITEHEIGHT= 16;
 	private final int SPRITEWIDTH= 16;
+	int SPRITECOL = 0;
+	int SPRITEROW = 3;
 	private final String IMAGELOCATION = "Snake";
 	private double xDir;
 	private double yDir;
@@ -24,8 +26,6 @@ public class BodyPart extends GameObject implements IDrawable, IMoving
 		x = newX; y = newY;
 		xDir = 0; yDir = 0;
 		try {
-			int SPRITECOL = 0;
-			int SPRITEROW = 3;
 			sprite = new Sprite(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -46,9 +46,26 @@ public class BodyPart extends GameObject implements IDrawable, IMoving
 		}
 	}
 
+	public void changeToTail()
+	{
+		try {
+			sprite.setImage(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, 0, 1);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void changeToBody()
+	{
+		try {
+			sprite.setImage(IMAGELOCATION, SPRITEHEIGHT, SPRITEWIDTH, SPRITECOL, SPRITEROW);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public void move() { x += xDir*2; y -= yDir*2;}
-	public void moveH() { x += xDir; y -= yDir;}
 	@Override
 	public Sprite getSprite() { return sprite; }
 	@Override
@@ -61,5 +78,4 @@ public class BodyPart extends GameObject implements IDrawable, IMoving
 	public double getXDir() { return xDir; }
 	@Override
 	public double getYDir() { return yDir; }
-	
 }
