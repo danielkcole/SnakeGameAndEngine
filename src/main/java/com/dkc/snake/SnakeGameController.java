@@ -15,7 +15,7 @@ public class SnakeGameController extends Controller
 	@Override
 	protected void tick(List<String> input)
 	{
-		if ( input.contains("UP") ) ((SnakeGameModel) model).start();
+		if ( input.contains("UP") && ((SnakeGameModel) model).getWonLost() == 2 ) ((SnakeGameModel) model).start();
 		if ( input.contains("LEFT") && ((SnakeGameModel) model).getWonLost() == 0 ) ((SnakeGameModel) model).goLeft();
 		if ( input.contains("RIGHT") && ((SnakeGameModel) model).getWonLost() == 0 ) ((SnakeGameModel) model).goRight();
 		if ( input.contains("DOWN") &&

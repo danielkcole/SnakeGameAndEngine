@@ -13,8 +13,8 @@ public class BodyPart extends GameObject implements IDrawable, IMoving
 {
 	private final int SPRITEHEIGHT= 16;
 	private final int SPRITEWIDTH= 16;
-	int SPRITECOL = 0;
-	int SPRITEROW = 3;
+	private final int SPRITECOL = 0;
+	private final int SPRITEROW = 3;
 	private final String IMAGELOCATION = "Snake";
 	private double xDir;
 	private double yDir;

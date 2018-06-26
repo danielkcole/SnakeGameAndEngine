@@ -12,7 +12,6 @@ import com.dkc.view.Sprite;
 
 public class SnakeGameModel extends Model
 {
-	//TODO make last body a tail, start with one body
 	private final ArrayList<BodyPart> bodyParts = new ArrayList<>();
 	private final Dot dot;
 	private final BodyPart head;
@@ -74,7 +73,7 @@ public class SnakeGameModel extends Model
 		double bodyCenterX;
 		double bodyCenterY;
 		double distance;
-		if (score >= 150 ) return 1;
+		if (score >= 300 ) return 1;
 		if (headCenterX < 7 || headCenterX > 314 || headCenterY < 7 || headCenterY > 314) return -1;
 		for(int i = bodyParts.size()-1; i > 0; i--)
 		{

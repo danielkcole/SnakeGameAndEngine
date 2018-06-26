@@ -17,7 +17,7 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class Controller extends AnimationTimer
 {
 	private final View view;
-	protected Model model;
+	protected final Model model;
 	private InputHandler inputHandler;
 
 	/**
@@ -68,7 +68,7 @@ public abstract class Controller extends AnimationTimer
 	 * Stops current game loop and passes the input handler down to the next Controller, then starts it.
 	 * @param newController the controller to switch to
 	 */
-	public void nextController(Controller newController)
+	protected void nextController(Controller newController)
 	{
 		stop();
 		view.clear();

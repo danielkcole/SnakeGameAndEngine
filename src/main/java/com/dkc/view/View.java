@@ -123,9 +123,23 @@ public abstract class View
 				drawSprite(go.getSprite(), go.getX(), go.getY(), go.getAngle());
 	}
 
-	public void clear() { graphicsContext.clearRect(0, 0, canvasHeight, canvasWidth); } //TODO comment
+	/**
+	 * Clears the current canvas.
+	 */
+	public void clear() { graphicsContext.clearRect(0, 0, canvasHeight, canvasWidth); }
 
+	/**
+	 * @return the current GraphicsContext.
+	 */
 	public GraphicsContext getGraphicsContext() { return graphicsContext; }
+
+	/**
+	 * @return the current Canvas height.
+	 */
 	public Double getCanvasHeight() { return canvasHeight; }
+
+	/**
+	 * @return the current Canvas width.
+	 */
 	public Double getCanvasWidth() { return canvasWidth; }
 }
